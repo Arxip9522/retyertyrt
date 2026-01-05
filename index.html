@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Котик Мармелад</title>
+  <style>
+    :root {
+      --bg: #fdf7ff;
+      --card: #ffffff;
+      --accent: #f28fb9;
+      --accent-strong: #ff7a9e;
+      --text: #2e1f2f;
+      --muted: #6c5a78;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 10% 20%, #ffe8f4 0, transparent 30%),
+        radial-gradient(circle at 90% 10%, #e3f8ff 0, transparent 25%),
+        radial-gradient(circle at 30% 80%, #e9f5e9 0, transparent 30%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .logo svg { width: 36px; height: 36px; }
+
+    .pill {
+      background: rgba(242, 143, 185, 0.12);
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--accent-strong);
+      font-weight: 600;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 12px 24px 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 56px);
+      margin: 12px 0 16px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent-strong), #f7b267);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: rgba(242, 143, 185, 0.12);
+      color: var(--accent-strong);
+      border: 1px solid rgba(242, 143, 185, 0.35);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .cat-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .cat-card::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 18px;
+      border: 1px dashed rgba(242, 143, 185, 0.3);
+      pointer-events: none;
+    }
+
+    .cat-illustration {
+      width: 100%;
+      height: 280px;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 72px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: clamp(26px, 4.5vw, 36px);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      height: 100%;
+    }
+
+    .card h3 { margin: 0 0 8px; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      background: rgba(108, 90, 120, 0.08);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .timeline .step {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      border-left: 4px solid var(--accent);
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 16px 48px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .cta-row { width: 100%; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="#">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="31" fill="#ffe9f2" />
+        <path d="M20 26c0-4 3-12 5-12 1.5 0 3.5 2.5 5 5 1.5-2.5 3.5-5 5-5 2 0 5 8 5 12 0 6-5 12-10 12S20 32 20 26Z" fill="#f28fb9" />
+        <path d="M26 40c2 2 4 3 6 3s4-1 6-3" stroke="#2e1f2f" stroke-width="2" stroke-linecap="round" />
+        <circle cx="27" cy="27" r="2.5" fill="#2e1f2f" />
+        <circle cx="37" cy="27" r="2.5" fill="#2e1f2f" />
+        <path d="M32 30.5c-.5 1.5-1.5 2.5-3 2.5 1.8 1.1 4.2 1.1 6 0-1.5 0-2.5-1-3-2.5Z" fill="#2e1f2f" />
+      </svg>
+      Мармелад
+    </a>
+    <div class="pill">♡ Главный любитель пледа и солнечных пятен</div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="pill">Добро пожаловать</div>
+      <h1>Знакомьтесь, котик Мармелад — тёплый пушистый комочек счастья.</h1>
+      <p>Он разговаривает хвостиком, любит наблюдать за птицами в окне и обожает, когда ему читают вслух. Эта страница — место, где можно узнать, чем живёт Мармелад прямо сейчас.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary">Хочу погладить</button>
+        <button class="btn btn-secondary">Показать новые фото</button>
+      </div>
+      <div class="facts">
+        <span class="chip">🥛 Завтрак: сливки 2%</span>
+        <span class="chip">🌞 Любимое место: под окном</span>
+        <span class="chip">🎶 Лайфхак: мурчит под джаз</span>
+      </div>
+    </div>
+    <div class="cat-card">
+      <svg class="cat-illustration" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Котик Мармелад">
+        <defs>
+          <linearGradient id="fur" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stop-color="#ffd5e5" />
+            <stop offset="100%" stop-color="#f7b267" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="320" height="260" rx="24" fill="#fff" />
+        <ellipse cx="160" cy="210" rx="110" ry="28" fill="#ffeef6" />
+        <path d="M95 150c0-36 28-70 65-70s65 34 65 70-28 60-65 60-65-24-65-60Z" fill="url(#fur)" />
+        <path d="M124 88c-3-10-2-26 4-26 4 0 13 8 16 14" fill="url(#fur)" />
+        <path d="M196 88c3-10 2-26-4-26-4 0-13 8-16 14" fill="url(#fur)" />
+        <circle cx="136" cy="150" r="10" fill="#2e1f2f" />
+        <circle cx="184" cy="150" r="10" fill="#2e1f2f" />
+        <path d="M160 152c-3 4-8 7-12 7 6 4 18 4 24 0-4 0-9-3-12-7Z" fill="#2e1f2f" />
+        <path d="M140 172c8 6 16 6 24 0" stroke="#2e1f2f" stroke-width="4" stroke-linecap="round" />
+        <path d="M118 160c-12 2-18 4-28 10m138-10c12 2 18 4 28 10" stroke="#2e1f2f" stroke-width="3" stroke-linecap="round" />
+        <circle cx="208" cy="134" r="8" fill="#fff8f0" />
+        <circle cx="112" cy="134" r="8" fill="#fff8f0" />
+        <path d="M112 184c8 22 32 34 48 34s40-12 48-34" fill="#ffe9f2" />
+      </svg>
+    </div>
+  </div>
+
+  <section>
+    <h2>Чем занят сегодня</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>09:30 — солнечная ванна</h3>
+        <p>Мармелад растягивается на подоконнике, ловит тепло и следит за голубями. В это время его лучше не отвлекать — идёт важная миссия наблюдения.</p>
+      </div>
+      <div class="card">
+        <h3>13:00 — дегустация хрустиков</h3>
+        <p>Спокойно подходит к миске, нюхает каждый кусочек, а затем мурлыкает благодарность. Любит, когда миска на уровне глаз: считает это признаком уважения.</p>
+      </div>
+      <div class="card">
+        <h3>19:45 — вечерний сеанс игр</h3>
+        <p>Погоня за ленточкой, неожиданные прыжки и обязательный финальный «бег боком». После победы требует аплодисменты и почесать за ухом.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Паспорт котика</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Имя</h3>
+        <p>Мармелад. Также откликается на «мармеладушка», если в руке лакомство.</p>
+      </div>
+      <div class="card">
+        <h3>Характер</h3>
+        <p>Нежный дипломат: умеет договориться за кусочек сыра, но строго следит за режимом сна.</p>
+      </div>
+      <div class="card">
+        <h3>Особые навыки</h3>
+        <p>Открывает двери, если они приоткрыты на миллиметр, и находит солнечные пятна даже в пасмурные дни.</p>
+      </div>
+    </div>
+    <div class="facts">
+      <span class="chip">🐾 Лапы: бархатные</span>
+      <span class="chip">👑 Порода: домашний монарх</span>
+      <span class="chip">💤 Сон в сутки: 16 часов</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Настроение недели</h2>
+    <div class="timeline">
+      <div class="step"><strong>Понедельник:</strong> нашёл новый коробок — требует оформить его как личную крепость.</div>
+      <div class="step"><strong>Среда:</strong> впервые подружился с пылесосом-роботом, теперь ездит верхом.</div>
+      <div class="step"><strong>Суббота:</strong> запрыгнул на шкаф и гордо наблюдает за всеми, как капитан корабля.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Почему Мармелад — лучший котик</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Мурчание 4K</h3>
+        <p>Звук мурчания успокаивает, как белый шум. Идеально для утреннего кофе и вечернего сериала.</p>
+      </div>
+      <div class="card">
+        <h3>Игривый интеллект</h3>
+        <p>Любит головоломки с лакомствами и сам придумывает правила, если они недостаточно сложные.</p>
+      </div>
+      <div class="card">
+        <h3>Мягкая терапия</h3>
+        <p>Приляжет на книгу в самый трогательный момент — значит, пора отдохнуть. Заботится о балансе.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>С любовью к хвостикам. Пусть у каждого будет свой Мармелад.</footer>
+</body>
+</html>
